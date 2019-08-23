@@ -1,4 +1,4 @@
-package com.cdut.springboot.dao;
+package com.cdut.springboot.jpa.testdb;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

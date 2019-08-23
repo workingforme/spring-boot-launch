@@ -1,7 +1,9 @@
 package com.cdut.springboot.service;
 
-import com.cdut.springboot.dao.Article;
-import com.cdut.springboot.dao.ArticleRepository;
+import com.cdut.springboot.jpa.testdb.Article;
+import com.cdut.springboot.jpa.testdb.ArticleRepository;
+import com.cdut.springboot.jpa.testdb2.Message;
+import com.cdut.springboot.jpa.testdb2.MessageRepository;
 import com.cdut.springboot.model.ArticleVO;
 import com.cdut.springboot.utils.DozerUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,9 @@ public class ArticleRestJPAServiceImpl implements ArticleRestService{
     private ArticleRepository articleRepository;
 
     @Resource
+    private MessageRepository messageRepository;
+
+    @Resource
     private Mapper dozerMapper;
 
     @Override
@@ -34,6 +39,11 @@ public class ArticleRestJPAServiceImpl implements ArticleRestService{
    */
         Article articlePO = dozerMapper.map(article,Article.class);;
         articleRepository.save(articlePO);
+
+        Message message = new Message();
+        message.setName("zhang");
+        message.setContent("hello");
+        messageRepository.save(message);
 
         return article;
     }

@@ -1,7 +1,7 @@
 package com.cdut.springboot.jpa;
 
-import com.cdut.springboot.dao.Article;
-import com.cdut.springboot.dao.ArticleRepository;
+import com.cdut.springboot.jpa.testdb.Article;
+import com.cdut.springboot.jpa.testdb.ArticleRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
