@@ -10,12 +10,15 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 import java.util.List;
 
+/* 表现层
+VO   与视图（展示 界面）有关的
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @JsonPropertyOrder(value={"content","title"})
-public class Article {
+public class ArticleVO {
 
    @JsonIgnore
     private Long id;

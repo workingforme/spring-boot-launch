@@ -1,7 +1,8 @@
 package com.cdut.springboot.controller;
 
 import com.cdut.springboot.model.AjaxResponse;
-import com.cdut.springboot.model.Article;
+import com.cdut.springboot.model.ArticleVO;
+import com.cdut.springboot.service.ArticleRestJPAServiceImpl;
 import com.cdut.springboot.service.ArticleRestService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -18,11 +19,11 @@ import javax.annotation.Resource;
 @RequestMapping("/rest")
 public class ArticleRestController {
 
-    @Resource
+    @Resource(name = "articleRestJPAServiceImpl")
     ArticleRestService articleRestService;
 
 
-    @ApiOperation(value = "添加文章", notes = "添加新的文章", tags = "Article",httpMethod = "POST")
+    @ApiOperation(value = "添加文章", notes = "添加新的文章", tags = "ArticleVO",httpMethod = "POST")
     @ApiResponses({
             @ApiResponse(code=200,message="成功",response= AjaxResponse.class),
             @ApiResponse(code=400,message="用户输入错误",response=AjaxResponse.class),
@@ -30,7 +31,7 @@ public class ArticleRestController {
     })
     //@RequestMapping(value = "/article", method = POST, produces = "application/json")
     @PostMapping("/article")
-    public @ResponseBody  AjaxResponse saveArticle(@RequestBody Article article) {
+    public @ResponseBody  AjaxResponse saveArticle(@RequestBody ArticleVO article) {
     /*public @ResponseBody  AjaxResponse saveArticle(@RequestParam String  id,
                                                    @RequestParam String  author) {*/
 
@@ -45,18 +46,19 @@ public class ArticleRestController {
     @DeleteMapping("/article/{id}")
     public @ResponseBody AjaxResponse deleteArticle(@PathVariable Long id) {
 
-        log.info("deleteArticle：{}",id);
+//        log.info("deleteArticle：{}",id);
+        articleRestService.deleteArticle(id);
 
         return AjaxResponse.success(id);
     }
  
     //@RequestMapping(value = "/article/{id}", method = PUT, produces = "application/json")
     @PutMapping("/article/{id}")
-    public @ResponseBody AjaxResponse updateArticle(@PathVariable Long id, @RequestBody Article article) {
+    public @ResponseBody AjaxResponse updateArticle(@PathVariable Long id, @RequestBody ArticleVO article) {
         article.setId(id);
 
-        log.info("updateArticle：{}",article);
-
+//        log.info("updateArticle：{}",article);
+        articleRestService.updateArticle(article);
         return AjaxResponse.success(article);
     }
  
@@ -64,7 +66,18 @@ public class ArticleRestController {
     @GetMapping( "/article/{id}")
     public @ResponseBody  AjaxResponse getArticle(@PathVariable Long id) {
 
-        Article article1 = Article.builder().id(1L).author("zimug").content("spring boot 2.深入浅出").title("t1").build();
-        return AjaxResponse.success(article1);
+//        ArticleVO article1 = ArticleVO.builder().id(1L).author("zimug").content("spring boot 2.深入浅出").title("t1").build();
+
+
+//        return AjaxResponse.success(article1);
+        return AjaxResponse.success(articleRestService.getArticle(id));
     }
+
+    @GetMapping( "/article")
+    public @ResponseBody  AjaxResponse getAll() {
+
+        return AjaxResponse.success(articleRestService.getAll());
+    }
+
+
 }

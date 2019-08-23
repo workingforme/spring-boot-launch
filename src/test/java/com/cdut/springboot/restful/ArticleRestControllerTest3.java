@@ -1,15 +1,14 @@
 package com.cdut.springboot.restful;
 
 import com.cdut.springboot.controller.ArticleRestController;
-import com.cdut.springboot.model.Article;
-import com.cdut.springboot.service.ArticleRestService;
+import com.cdut.springboot.model.ArticleVO;
+import com.cdut.springboot.service.ArticleRestJPAServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -34,7 +33,7 @@ public class ArticleRestControllerTest3 {
     private MockMvc mockMvc;
 
     @MockBean
-    ArticleRestService articleRestService;
+    ArticleRestJPAServiceImpl articleRestService;
 
     /*@Before
     public void setUp() {
@@ -54,10 +53,10 @@ public class ArticleRestControllerTest3 {
 
 
         ObjectMapper objectMapper = new ObjectMapper();
-        Article articleObj = objectMapper.readValue(article,Article.class);
+        ArticleVO articleObj = objectMapper.readValue(article, ArticleVO.class);
 
         //打桩
-        when(articleRestService.saveArticle(articleObj)).thenReturn("ok");
+        when(articleRestService.saveArticle(articleObj)).thenReturn(articleObj);
 
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.request(HttpMethod.POST, "/rest/article")
